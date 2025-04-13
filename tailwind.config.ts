@@ -63,11 +63,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				gold: {
+					DEFAULT: '#FFD700',
+					light: '#FFF8DC',
+					dark: '#DAA520'
+				},
 				jenimart: {
-					primary: '#2A6B75',
-					secondary: '#D9795B',
-					accent: '#D4AF37',
-					light: '#FDF7F2',
+					primary: '#FFD700',
+					secondary: '#FFC107',
+					accent: '#FFD700',
+					light: '#FFF8DC',
 					dark: '#333333',
 				}
 			},
@@ -104,6 +109,10 @@ export default {
 				'fade-in': {
 					'0%': { opacity: '0' },
 					'100%': { opacity: '1' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
 				}
 			},
 			animation: {
@@ -111,7 +120,11 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'slide-in-right': 'slide-in-right 0.3s ease-out',
 				'slide-out-right': 'slide-out-right 0.3s ease-out',
-				'fade-in': 'fade-in 0.3s ease-out'
+				'fade-in': 'fade-in 0.3s ease-out',
+				'shimmer': 'shimmer 2s infinite linear'
+			},
+			backgroundImage: {
+				'gold-gradient': 'linear-gradient(to right, #FFD700, #FFC107)',
 			}
 		}
 	},

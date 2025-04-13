@@ -8,8 +8,9 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Heart, Check, Truck, ArrowLeft, ChevronRight, StarIcon } from 'lucide-react';
+import { ShoppingCart, Heart, Check, Truck, ArrowLeft, ChevronRight, Star } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SimilarProductsCarousel from '@/components/products/SimilarProductsCarousel';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ const ProductDetail = () => {
         <div className="container-custom py-32 text-center">
           <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
           <p className="mb-6">Sorry, the product you're looking for doesn't exist.</p>
-          <Button onClick={() => navigate('/products')}>
+          <Button onClick={() => navigate('/products')} className="bg-primary hover:bg-primary/90">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Products
           </Button>
         </div>
@@ -71,21 +72,21 @@ const ProductDetail = () => {
       <div className="container-custom py-12">
         {/* Breadcrumbs */}
         <div className="flex items-center text-sm text-gray-500 mb-8">
-          <button onClick={() => navigate('/')} className="hover:text-jenimart-primary">Home</button>
+          <button onClick={() => navigate('/')} className="hover:text-primary">Home</button>
           <ChevronRight className="h-4 w-4 mx-2" />
-          <button onClick={() => navigate('/products')} className="hover:text-jenimart-primary">Products</button>
+          <button onClick={() => navigate('/products')} className="hover:text-primary">Products</button>
           <ChevronRight className="h-4 w-4 mx-2" />
           <span className="text-gray-900">{product.name}</span>
         </div>
         
         <div className="grid md:grid-cols-2 gap-10">
           {/* Product Images */}
-          <div>
-            <div className="mb-4 rounded-lg overflow-hidden border">
+          <div className="stylish-card bg-white p-4 rounded-xl">
+            <div className="mb-4 rounded-lg overflow-hidden">
               <img 
                 src={product.gallery?.[activeImageIndex] || product.image || '/placeholder.svg'} 
                 alt={product.name} 
-                className="w-full h-96 object-cover"
+                className="w-full h-96 object-cover rounded-lg transition-all duration-300 hover:scale-105"
               />
             </div>
             <div className="flex gap-2 overflow-x-auto pb-2">
@@ -93,7 +94,8 @@ const ProductDetail = () => {
                 <button 
                   key={index}
                   onClick={() => setActiveImageIndex(index)}
-                  className={`w-20 h-20 flex-shrink-0 rounded border overflow-hidden ${index === activeImageIndex ? 'ring-2 ring-jenimart-primary' : ''}`}
+                  className={`w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 
+                  ${index === activeImageIndex ? 'ring-2 ring-primary' : 'opacity-70 hover:opacity-100'}`}
                 >
                   <img 
                     src={image} 
@@ -106,23 +108,23 @@ const ProductDetail = () => {
           </div>
           
           {/* Product Info */}
-          <div>
+          <div className="stylish-card">
             <div className="mb-6">
               {product.bestseller && (
-                <Badge variant="outline" className="bg-jenimart-accent text-jenimart-dark border-0 mb-2">
+                <Badge variant="outline" className="bg-gold-light text-gold-dark border-gold-light mb-2">
                   Bestseller
                 </Badge>
               )}
               {product.new && (
-                <Badge className="bg-jenimart-primary mb-2 ml-2">New</Badge>
+                <Badge className="bg-primary mb-2 ml-2">New</Badge>
               )}
               
-              <h1 className="text-3xl font-bold">{product.name}</h1>
+              <h1 className="text-3xl font-bold gold-text mb-3">{product.name}</h1>
               
               <div className="flex items-center mt-2 mb-4">
                 <div className="flex mr-2">
                   {[...Array(5)].map((_, i) => (
-                    <StarIcon
+                    <Star
                       key={i}
                       className={`h-5 w-5 ${
                         i < Math.floor(product.rating) 
@@ -138,11 +140,11 @@ const ProductDetail = () => {
               </div>
               
               <div className="flex items-baseline mb-6">
-                <span className="text-3xl font-bold text-jenimart-primary">${product.price.toFixed(2)}</span>
+                <span className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</span>
                 {product.originalPrice > product.price && (
                   <>
                     <span className="ml-3 text-lg text-gray-500 line-through">${product.originalPrice.toFixed(2)}</span>
-                    <Badge className="ml-3 bg-jenimart-secondary">Save {discountPercentage}%</Badge>
+                    <Badge className="ml-3 bg-secondary">Save {discountPercentage}%</Badge>
                   </>
                 )}
               </div>
@@ -193,28 +195,28 @@ const ProductDetail = () => {
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <Button 
                   onClick={handleAddToCart}
-                  className="flex-1 bg-jenimart-primary hover:bg-jenimart-primary/90"
+                  className="flex-1 bg-primary hover:bg-primary/90"
                   disabled={!product.inStock}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
                 </Button>
                 <Button 
                   onClick={handleBuyNow}
-                  className="flex-1 bg-jenimart-secondary hover:bg-jenimart-secondary/90"
+                  className="flex-1 bg-secondary hover:bg-secondary/90"
                   disabled={!product.inStock}
                 >
                   Buy Now
                 </Button>
                 <Button 
                   variant="outline"
-                  className="sm:flex-initial border-jenimart-primary text-jenimart-primary hover:bg-jenimart-primary/10"
+                  className="sm:flex-initial border-primary text-primary hover:bg-primary/10"
                 >
                   <Heart className="h-5 w-5" />
                 </Button>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-lg flex items-start">
-                <Truck className="text-jenimart-primary h-5 w-5 mt-1 mr-3 flex-shrink-0" />
+              <div className="bg-gold-light p-4 rounded-lg flex items-start">
+                <Truck className="text-primary h-5 w-5 mt-1 mr-3 flex-shrink-0" />
                 <div>
                   <p className="font-medium">Free shipping on orders over $99</p>
                   <p className="text-sm text-gray-600">Estimated delivery: 3-5 business days</p>
@@ -222,6 +224,12 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
+        </div>
+        
+        {/* Similar Products Carousel */}
+        <div className="mt-16">
+          <h2 className="section-title mb-8">Similar Products</h2>
+          <SimilarProductsCarousel products={relatedProducts} />
         </div>
         
         {/* Tabs Section */}
@@ -234,7 +242,7 @@ const ProductDetail = () => {
               <TabsTrigger value="shipping" className="flex-1 sm:flex-initial">Shipping & Returns</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="description" className="min-h-[200px]">
+            <TabsContent value="description" className="min-h-[200px] stylish-card">
               <div className="space-y-4">
                 <p className="text-gray-700">{product.description}</p>
                 <p className="text-gray-700">
@@ -249,10 +257,10 @@ const ProductDetail = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="specifications" className="min-h-[200px]">
+            <TabsContent value="specifications" className="min-h-[200px] stylish-card">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-semibold text-lg mb-3">Product Details</h3>
+                  <h3 className="font-semibold text-lg mb-3 gold-text">Product Details</h3>
                   <div className="space-y-2">
                     <div className="flex justify-between border-b pb-2">
                       <span className="text-gray-600">Material</span>
@@ -274,7 +282,7 @@ const ProductDetail = () => {
                 </div>
                 
                 <div>
-                  <h3 className="font-semibold text-lg mb-3">Care Instructions</h3>
+                  <h3 className="font-semibold text-lg mb-3 gold-text">Care Instructions</h3>
                   <ul className="list-disc list-inside space-y-2 text-gray-700">
                     <li>Clean after each use</li>
                     <li>Follow product-specific cleaning instructions</li>
@@ -286,18 +294,18 @@ const ProductDetail = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="reviews" className="min-h-[200px]">
+            <TabsContent value="reviews" className="min-h-[200px] stylish-card">
               <div className="space-y-6">
                 <div className="flex items-center mb-6">
                   <div className="flex items-center mr-4">
-                    <StarIcon className="h-8 w-8 text-yellow-400 fill-current" />
+                    <Star className="h-8 w-8 text-yellow-400 fill-current" />
                     <span className="text-3xl font-bold ml-2">{product.rating}</span>
                   </div>
                   <div>
                     <p className="text-gray-600">{product.reviews} verified ratings</p>
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
-                        <StarIcon
+                        <Star
                           key={i}
                           className={`h-5 w-5 ${
                             i < Math.floor(product.rating) 
@@ -310,17 +318,17 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">Product Reviews</h3>
-                  <Button>Write a Review</Button>
+                  <h3 className="text-xl font-semibold gold-text">Product Reviews</h3>
+                  <Button className="bg-primary hover:bg-primary/90">Write a Review</Button>
                 </div>
                 <p className="text-gray-600">Customer reviews will appear here when available.</p>
               </div>
             </TabsContent>
             
-            <TabsContent value="shipping" className="min-h-[200px]">
+            <TabsContent value="shipping" className="min-h-[200px] stylish-card">
               <div className="space-y-6">
                 <div>
-                  <h3 className="font-semibold text-lg mb-3">Shipping Information</h3>
+                  <h3 className="font-semibold text-lg mb-3 gold-text">Shipping Information</h3>
                   <ul className="list-disc list-inside space-y-2 text-gray-700">
                     <li>Free standard shipping on orders over $99</li>
                     <li>Standard shipping (3-5 business days): $9.99</li>
@@ -330,7 +338,7 @@ const ProductDetail = () => {
                 </div>
                 
                 <div>
-                  <h3 className="font-semibold text-lg mb-3">Return Policy</h3>
+                  <h3 className="font-semibold text-lg mb-3 gold-text">Return Policy</h3>
                   <ul className="list-disc list-inside space-y-2 text-gray-700">
                     <li>30-day money-back guarantee</li>
                     <li>Return shipping is free for defective items</li>
@@ -342,14 +350,6 @@ const ProductDetail = () => {
             </TabsContent>
           </Tabs>
         </div>
-        
-        {/* Related Products */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-16">
-            <h2 className="section-title mb-8">You May Also Like</h2>
-            <ProductGrid products={relatedProducts} />
-          </div>
-        )}
       </div>
     </Layout>
   );
