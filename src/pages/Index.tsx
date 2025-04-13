@@ -1,13 +1,45 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import Layout from '../components/layout/Layout';
+import Hero from '../components/home/Hero';
+import Features from '../components/home/Features';
+import FeaturedCategories from '../components/home/FeaturedCategories';
+import ProductGrid from '../components/products/ProductGrid';
+import Testimonials from '../components/home/Testimonials';
+import Newsletter from '../components/home/Newsletter';
+import { getBestsellerProducts, getDiscountedProducts, getNewProducts } from '../data/products';
 
 const Index = () => {
+  const bestsellerProducts = getBestsellerProducts();
+  const newProducts = getNewProducts();
+  const discountedProducts = getDiscountedProducts();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <Layout>
+      <Hero />
+      <Features />
+      <div className="container-custom">
+        <ProductGrid 
+          products={bestsellerProducts} 
+          title="Bestselling Products" 
+        />
       </div>
-    </div>
+      <FeaturedCategories />
+      <div className="container-custom">
+        <ProductGrid 
+          products={newProducts} 
+          title="New Arrivals" 
+        />
+      </div>
+      <div className="container-custom">
+        <ProductGrid 
+          products={discountedProducts} 
+          title="Special Offers" 
+        />
+      </div>
+      <Testimonials />
+      <Newsletter />
+    </Layout>
   );
 };
 
