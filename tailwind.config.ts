@@ -69,9 +69,9 @@ export default {
 					dark: '#DAA520'
 				},
 				jenimart: {
-					primary: '#FFD700',
-					secondary: '#FFC107',
-					accent: '#FFD700',
+					primary: '#FF0000',
+					secondary: '#FFD700',
+					accent: '#333333',
 					light: '#FFF8DC',
 					dark: '#333333',
 				}
@@ -113,6 +113,10 @@ export default {
 				'shimmer': {
 					'0%': { backgroundPosition: '-200% 0' },
 					'100%': { backgroundPosition: '200% 0' }
+				},
+				'bounce-slight': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
 				}
 			},
 			animation: {
@@ -121,10 +125,12 @@ export default {
 				'slide-in-right': 'slide-in-right 0.3s ease-out',
 				'slide-out-right': 'slide-out-right 0.3s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
-				'shimmer': 'shimmer 2s infinite linear'
+				'shimmer': 'shimmer 2s infinite linear',
+				'bounce-slight': 'bounce-slight 2s infinite ease-in-out'
 			},
 			backgroundImage: {
 				'gold-gradient': 'linear-gradient(to right, #FFD700, #FFC107)',
+				'red-gradient': 'linear-gradient(to right, #FF0000, #FF5555)',
 			}
 		}
 	},

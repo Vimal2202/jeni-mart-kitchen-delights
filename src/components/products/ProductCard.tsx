@@ -6,6 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { type Product } from '@/data/products';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +14,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addItem, openCart } = useCart();
+  const { toast } = useToast();
   
   const discountPercentage = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100
@@ -27,7 +29,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       image: product.image,
       quantity: 1
     });
-    openCart();
+    
+    // Show toast notification
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart`,
+      variant: "default",
+      duration: 3000,
+    });
   };
 
   return (
@@ -42,33 +51,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </Link>
         
         {discountPercentage > 0 && (
-          <Badge className="absolute top-2 left-2 bg-jenimart-secondary">
+          <Badge className="absolute top-2 left-2 bg-red-600 text-white font-semibold">
             {discountPercentage}% OFF
           </Badge>
         )}
         
         {product.bestseller && (
-          <Badge variant="outline" className="absolute top-2 right-2 bg-jenimart-accent text-jenimart-dark border-0">
+          <Badge variant="outline" className="absolute top-2 right-2 bg-gold-light text-gold-dark border-gold">
             Bestseller
           </Badge>
         )}
         
         {product.new && (
-          <Badge className="absolute top-2 right-2 bg-jenimart-primary">
+          <Badge className="absolute top-2 right-2 bg-jenimart-primary text-white">
             New
           </Badge>
         )}
         
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button className="p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors">
-            <Heart className="h-5 w-5 text-jenimart-secondary" />
+            <Heart className="h-5 w-5 text-red-500" />
           </button>
         </div>
       </div>
       
       <div className="p-4 flex flex-col flex-grow">
         <Link to={`/product/${product.id}`} className="mb-2">
-          <h3 className="font-medium text-lg hover:text-jenimart-primary transition-colors">{product.name}</h3>
+          <h3 className="font-medium text-lg hover:text-primary transition-colors line-clamp-2">{product.name}</h3>
         </Link>
         
         <div className="flex items-center mb-3">
@@ -95,16 +104,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         
         <div className="mt-auto">
           <div className="flex items-baseline mb-3">
-            <span className="text-xl font-bold text-jenimart-primary">${product.price.toFixed(2)}</span>
+            <span className="text-xl font-bold text-red-600">₹{product.price.toFixed(2)}</span>
             {product.originalPrice > product.price && (
-              <span className="ml-2 text-sm text-gray-500 line-through">${product.originalPrice.toFixed(2)}</span>
+              <span className="ml-2 text-sm text-gray-500 line-through">₹{product.originalPrice.toFixed(2)}</span>
             )}
           </div>
           
           <div className="flex items-center space-x-2">
             <Button 
               onClick={handleAddToCart}
-              className="w-full bg-jenimart-primary hover:bg-jenimart-primary/90 text-white"
+              className="w-full bg-red-600 hover:bg-red-700 text-white"
             >
               <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
             </Button>

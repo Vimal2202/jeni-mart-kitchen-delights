@@ -1,10 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Search, User, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search, User, Phone } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Badge } from '@/components/ui/badge';
-import { categories } from '@/data/products';
 
 const Header: React.FC = () => {
   const { toggleCart, itemCount } = useCart();
@@ -34,84 +33,80 @@ const Header: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
-      ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}
+      ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-white shadow-sm py-2'}`}
     >
-      <div className="container-custom">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-jenimart-primary">Jeni</span>
-            <span className="text-2xl font-bold text-jenimart-secondary">Mart</span>
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/lovable-uploads/96f094ca-0ec5-4aa2-b804-dc61f2b7ee92.png" 
+              alt="Jeni Mart Logo" 
+              className="h-12"
+            />
           </Link>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link 
-              to="/" 
-              className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/') ? 'text-jenimart-primary' : ''}`}
-            >
-              Home
-            </Link>
-            <div className="relative group">
-              <button className="flex items-center font-medium hover:text-jenimart-primary transition-colors">
-                Categories <ChevronDown className="ml-1 w-4 h-4" />
-              </button>
-              <div className="absolute left-0 top-full bg-white shadow-lg rounded p-4 w-48 hidden group-hover:block">
-                {categories.map(category => (
-                  <Link 
-                    key={category.id}
-                    to={`/category/${category.id}`}
-                    className="block py-2 hover:text-jenimart-primary transition-colors"
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <Link 
-              to="/products" 
-              className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/products') ? 'text-jenimart-primary' : ''}`}
-            >
-              All Products
-            </Link>
-            <Link 
-              to="/about" 
-              className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/about') ? 'text-jenimart-primary' : ''}`}
-            >
-              About Us
-            </Link>
-            <Link 
-              to="/contact" 
-              className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/contact') ? 'text-jenimart-primary' : ''}`}
-            >
-              Contact
-            </Link>
-          </nav>
-          
-          {/* Search, User & Cart Icons */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center relative">
+          {/* Search Bar - Desktop */}
+          <div className="hidden md:flex items-center relative flex-1 max-w-xl mx-6">
+            <div className="w-full relative">
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchValue}
                 onChange={e => setSearchValue(e.target.value)}
-                className="pl-3 pr-10 py-1 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-jenimart-primary text-sm"
+                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-primary"
               />
-              <Search className="w-4 h-4 absolute right-3 text-gray-500" />
+              <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
-            
-            <Link to="/account" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <User className="w-5 h-5" />
+          </div>
+          
+          {/* Desktop Nav Items */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link 
+              to="/" 
+              className={`font-medium hover:text-primary transition-colors ${isActive('/') ? 'text-primary' : 'text-gray-700'}`}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/products" 
+              className={`font-medium hover:text-primary transition-colors ${isActive('/products') ? 'text-primary' : 'text-gray-700'}`}
+            >
+              Products
+            </Link>
+            <Link 
+              to="/jeni-masala" 
+              className={`font-medium hover:text-primary transition-colors ${isActive('/jeni-masala') ? 'text-primary' : 'text-gray-700'}`}
+            >
+              Jeni's Masala
+            </Link>
+            <Link 
+              to="/contact" 
+              className={`font-medium hover:text-primary transition-colors ${isActive('/contact') ? 'text-primary' : 'text-gray-700'}`}
+            >
+              Contact
+            </Link>
+            <Link 
+              to="/about" 
+              className={`font-medium hover:text-primary transition-colors ${isActive('/about') ? 'text-primary' : 'text-gray-700'}`}
+            >
+              About
+            </Link>
+          </div>
+          
+          {/* Cart & Menu Icons */}
+          <div className="flex items-center space-x-4">
+            <Link to="/account" className="p-2 hover:bg-gray-100 rounded-full transition-colors hidden md:flex">
+              <User className="w-5 h-5 text-gray-700" />
             </Link>
             
             <button 
               onClick={toggleCart} 
               className="p-2 hover:bg-gray-100 rounded-full transition-colors relative"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5 text-gray-700" />
               {itemCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 bg-jenimart-secondary">{itemCount}</Badge>
+                <Badge className="absolute -top-1 -right-1 bg-red-600 text-white">{itemCount}</Badge>
               )}
             </button>
             
@@ -119,71 +114,77 @@ const Header: React.FC = () => {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-5 h-5 text-gray-700" /> : <Menu className="w-5 h-5 text-gray-700" />}
             </button>
+          </div>
+        </div>
+        
+        {/* Mobile Search */}
+        <div className="mt-2 md:hidden">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchValue}
+              onChange={e => setSearchValue(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+            <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
         
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t">
-            <div className="flex items-center relative mb-4">
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
-                className="w-full pl-3 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-jenimart-primary"
-              />
-              <Search className="w-4 h-4 absolute right-3 text-gray-500" />
-            </div>
-            
+          <div className="md:hidden mt-2 py-3 bg-white border-t">
             <nav className="flex flex-col space-y-3">
               <Link 
                 to="/" 
-                className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/') ? 'text-jenimart-primary' : ''}`}
+                className={`px-4 py-2 font-medium ${isActive('/') ? 'text-primary' : 'text-gray-700'}`}
               >
                 Home
               </Link>
-              
-              <div className="relative">
-                <button className="flex items-center font-medium hover:text-jenimart-primary transition-colors">
-                  Categories <ChevronDown className="ml-1 w-4 h-4" />
-                </button>
-                <div className="ml-4 mt-2 space-y-2">
-                  {categories.map(category => (
-                    <Link 
-                      key={category.id}
-                      to={`/category/${category.id}`}
-                      className="block py-1 hover:text-jenimart-primary transition-colors"
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              
               <Link 
                 to="/products" 
-                className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/products') ? 'text-jenimart-primary' : ''}`}
+                className={`px-4 py-2 font-medium ${isActive('/products') ? 'text-primary' : 'text-gray-700'}`}
               >
-                All Products
+                Products
               </Link>
               <Link 
-                to="/about" 
-                className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/about') ? 'text-jenimart-primary' : ''}`}
+                to="/jeni-masala" 
+                className={`px-4 py-2 font-medium ${isActive('/jeni-masala') ? 'text-primary' : 'text-gray-700'}`}
               >
-                About Us
+                Jeni's Masala
               </Link>
               <Link 
                 to="/contact" 
-                className={`font-medium hover:text-jenimart-primary transition-colors ${isActive('/contact') ? 'text-jenimart-primary' : ''}`}
+                className={`px-4 py-2 font-medium ${isActive('/contact') ? 'text-primary' : 'text-gray-700'}`}
               >
                 Contact
+              </Link>
+              <Link 
+                to="/about" 
+                className={`px-4 py-2 font-medium ${isActive('/about') ? 'text-primary' : 'text-gray-700'}`}
+              >
+                About
+              </Link>
+              <Link 
+                to="/account" 
+                className={`px-4 py-2 font-medium text-gray-700`}
+              >
+                My Account
               </Link>
             </nav>
           </div>
         )}
+      </div>
+      
+      {/* WhatsApp Contact Info */}
+      <div className="hidden md:flex justify-end items-center bg-green-50 py-1 px-6">
+        <div className="flex items-center text-green-600 text-sm">
+          <Phone className="w-4 h-4 mr-1" />
+          <span className="font-medium">WhatsApp:</span>
+          <a href="https://wa.me/919360671185" className="ml-1 hover:underline">+91-9360671185</a>
+        </div>
       </div>
     </header>
   );

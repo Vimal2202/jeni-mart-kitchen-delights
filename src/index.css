@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 30 30% 98%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 45 100% 47%;
+    --primary: 0 85% 50%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 45 95% 60%;
@@ -23,7 +23,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 45 100% 47%;
+    --accent: 0 85% 50%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,7 +31,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 45 100% 47%;
+    --ring: 0 85% 50%;
 
     --radius: 0.5rem;
   }
@@ -46,7 +46,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 45 100% 47%;
+    --primary: 0 85% 50%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 45 95% 60%;
@@ -55,7 +55,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 45 100% 47%;
+    --accent: 0 85% 50%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -63,7 +63,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 45 100% 47%;
+    --ring: 0 85% 50%;
   }
 }
 
@@ -107,11 +107,62 @@
     @apply relative overflow-hidden rounded-xl bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100;
   }
 
+  .red-gradient {
+    @apply bg-gradient-to-r from-red-600 to-red-500;
+  }
+
   .gold-gradient {
     @apply bg-gradient-to-r from-[#FFD700] to-[#FFC107];
   }
 
+  .red-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-500 font-bold;
+  }
+
   .gold-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-[#FFC107] font-bold;
+  }
+  
+  .whatsapp-button {
+    @apply fixed bottom-6 right-6 z-10 flex items-center justify-center p-3 rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition-colors;
+  }
+  
+  .add-to-cart-button {
+    @apply w-full py-3 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2;
+  }
+  
+  .quantity-control {
+    @apply flex items-center border border-gray-300 rounded overflow-hidden;
+  }
+  
+  .quantity-button {
+    @apply px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors;
+  }
+  
+  .product-image-gallery {
+    @apply grid grid-cols-5 gap-2;
+  }
+  
+  .product-thumbnail {
+    @apply border-2 rounded-md overflow-hidden cursor-pointer transition-all;
+  }
+  
+  .product-thumbnail-active {
+    @apply border-red-600;
+  }
+  
+  .product-main-image {
+    @apply col-span-5 rounded-lg overflow-hidden border border-gray-200;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
