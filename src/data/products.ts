@@ -1,4 +1,3 @@
-
 export type Product = {
   id: string;
   name: string;
@@ -198,12 +197,20 @@ export const products: Product[] = [
 ];
 
 export const categories = [
-  { id: "knives", name: "Knives & Cutting", image: "/category-knives.jpg", count: 12 },
-  { id: "cookware", name: "Cookware", image: "/category-cookware.jpg", count: 24 },
-  { id: "baking", name: "Baking Tools", image: "/category-baking.jpg", count: 18 },
-  { id: "utensils", name: "Utensils", image: "/category-utensils.jpg", count: 30 },
-  { id: "gadgets", name: "Kitchen Gadgets", image: "/category-gadgets.jpg", count: 15 },
-  { id: "preparation", name: "Food Preparation", image: "/category-preparation.jpg", count: 20 },
+  {
+    id: 'masala',
+    name: 'Masala',
+    description: 'Traditional Indian spice blends',
+    count: 0,  // This will be updated dynamically
+    image: '/masala-category.jpg'
+  },
+  {
+    id: 'utensils',
+    name: 'Utensils',
+    description: 'Premium kitchen utensils',
+    count: 0,  // This will be updated dynamically
+    image: '/utensils-category.jpg'
+  }
 ];
 
 export const getProductById = (id: string): Product | undefined => {
