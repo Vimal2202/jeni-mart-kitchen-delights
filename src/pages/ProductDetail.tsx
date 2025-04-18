@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -7,11 +6,13 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Heart, Check, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, Heart, Check, ArrowLeft, Star } from 'lucide-react';
 import ProductImageZoom from '@/components/products/ProductImageZoom';
 import SimilarProductsCarousel from '@/components/products/SimilarProductsCarousel';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useToast } from "@/hooks/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -161,6 +162,63 @@ const ProductDetail = () => {
         </div>
 
         <Separator className="my-12" />
+        
+        <div className="mb-12">
+          <Tabs defaultValue="description" className="w-full">
+            <TabsList className="w-full justify-start mb-8">
+              <TabsTrigger value="description" className="text-lg">Description</TabsTrigger>
+              <TabsTrigger value="features" className="text-lg">Features</TabsTrigger>
+              <TabsTrigger value="reviews" className="text-lg">Reviews</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="description">
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-gray-600 leading-relaxed">
+                    {product.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="features">
+              <Card>
+                <CardContent className="pt-6">
+                  <ul className="list-disc pl-5 space-y-2">
+                    {product.features.map((feature, index) => (
+                      <li key={index} className="text-gray-600">{feature}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="reviews">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="space-y-6">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-3xl font-bold">{product.rating}</span>
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-5 h-5 ${
+                              i < Math.floor(product.rating)
+                                ? 'text-yellow-400 fill-yellow-400'
+                                : 'text-gray-300'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-gray-500">({product.reviews} reviews)</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
 
         <div>
           <h2 className="text-2xl font-bold mb-6">Similar Products</h2>
